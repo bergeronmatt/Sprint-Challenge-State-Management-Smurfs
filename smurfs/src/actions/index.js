@@ -1,6 +1,5 @@
 
 import axios from 'axios'
-import { connect } from 'react-redux'
 
 export const GET_DATA= 'GET_DATA'
 export const UPDATE_LIST = 'UPDATE_LIST'
@@ -13,7 +12,7 @@ export const getData = () => dispatch => {
     dispatch({type: GET_DATA})
     axios.get('http://localhost:3333/smurfs')
     .then(res => {
-        console.log(`Actions Response: ${res}`)
+        console.log(`Actions Response: ${res.data}`)
         dispatch({type: UPDATE_LIST, payload: res.data})
     })
     .catch(err => {
@@ -22,9 +21,12 @@ export const getData = () => dispatch => {
     })
 }
 
-// export const addSmurf = () => dispatch => {
-//     dispatch({type: ADD_SMURF})
-//     axios.post('http://localhost:3333/smurfs')
-// }
+export const addSmurf = creds => dispatch => {
+    return axios.post('http://localhost:3333/smurfs', creds)
+    .then(res => {
+        const addedSmurf = {type: ADD_SMURF, payload: res}
+        dispatch(addedSmurf)
+    })
+}
 
 

@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {getData} from '../actions'
-import axios from 'axios'
+import {getData, addSmurf} from '../actions'
 
 const SmurfForm = props => {
     const handleGetData = e => {
@@ -9,11 +8,7 @@ const SmurfForm = props => {
         props.getData();
     }
 
-    const [smurf, setSmurf] = useState({
-        name: '',
-        age: '',
-        height: ''
-    });
+    const [smurf, setSmurf] = useState({});
 
     const handleChanges = e => {
         setSmurf({...smurf, [e.target.name]: e.target.value})
@@ -22,25 +17,7 @@ const SmurfForm = props => {
 
     const submitForm = e => {
         e.preventDefault();
-        const newSmurf = {
-            name: smurf.name,
-            age: smurf.age,
-            height: smurf.height
-        }
-        console.log(`NEW SMURF: ${newSmurf}`);
-
-        axios.post('http://localhost:3333/smurfs', newSmurf)
-        .then(res => {
-            console.log(`NEW SMURF CREATED: ${res}`)
-        })
-        .catch(err=> {
-            console.log(`SMURF FORM ERROR: ${err}`)
-        })
-        setSmurf({
-            name: "",
-            age: '',
-            height: ''
-        })
+        props.addSmurf();
     }
 
     return(
