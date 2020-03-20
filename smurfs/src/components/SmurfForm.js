@@ -3,26 +3,22 @@ import {connect} from 'react-redux'
 import {getData, addSmurf} from '../actions'
 
 const SmurfForm = props => {
+
+    
+    const [smurf, setSmurf] = useState({});
+
     const handleGetData = e => {
         e.preventDefault();
         props.getData();
     }
 
-    const [smurf, setSmurf] = useState({
-        name:'',
-        age:'',
-        height:''
-    });
-
     const handleChanges = e => {
         setSmurf({...smurf, [e.target.name]: e.target.value})
-        console.log(`SMURF NAME: ${smurf}`);
     };
 
     const submitForm = e => {
         e.preventDefault();
-        props.addSmurf(smurf);
-        setSmurf({name:'', age:'', height:''})
+        props.addSmurf(setSmurf);
     }
 
     return(
@@ -76,5 +72,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {getData}
+    {getData, addSmurf}
 )(SmurfForm)
