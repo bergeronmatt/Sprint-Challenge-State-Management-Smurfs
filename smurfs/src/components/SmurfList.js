@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import Smurfs from './Smurfs';
-import Axios from 'axios';
+import axios from 'axios';
 
 function SmurfList () {
 
     const {smurfs, setSmurfs} = useState([]);
 
     useEffect(() => {
-        Axios.get('http://localhost:3333/smurfs')
+        axios.get('http://localhost:3333/smurfs')
         .then(res => {
             console.log(`Smurf List Response: ${res}`)
+            setSmurfs(res.data)
         })
         .catch(err => {
             console.log(`Smurf List Error: ${err}`)
@@ -19,7 +20,7 @@ function SmurfList () {
     return (
         <div>
             <h1>Smurf List</h1>
-            <Smurfs />
+            <Smurfs smurfs={smurfs} />
         </div>
     )
 };
