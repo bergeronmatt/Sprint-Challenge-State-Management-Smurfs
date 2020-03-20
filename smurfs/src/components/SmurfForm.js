@@ -8,7 +8,11 @@ const SmurfForm = props => {
         props.getData();
     }
 
-    const [smurf, setSmurf] = useState({});
+    const [smurf, setSmurf] = useState({
+        name:'',
+        age:'',
+        height:''
+    });
 
     const handleChanges = e => {
         setSmurf({...smurf, [e.target.name]: e.target.value})
@@ -17,7 +21,8 @@ const SmurfForm = props => {
 
     const submitForm = e => {
         e.preventDefault();
-        props.addSmurf();
+        props.addSmurf(smurf);
+        setSmurf({name:'', age:'', height:''})
     }
 
     return(

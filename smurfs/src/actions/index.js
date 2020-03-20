@@ -22,10 +22,15 @@ export const getData = () => dispatch => {
 }
 
 export const addSmurf = creds => dispatch => {
+    dispatch({type: ADD_SMURF})
     return axios.post('http://localhost:3333/smurfs', creds)
     .then(res => {
-        const addedSmurf = {type: ADD_SMURF, payload: res}
+        const addedSmurf = {type: ADD_SMURF, payload: res.data}
         dispatch(addedSmurf)
+    })
+    .catch(err => {
+        console.log(`Actions Error sending data to API: ${err}`)
+        dispatch({type: SET_ERROR, payload: 'error fetching data from api'})
     })
 }
 
