@@ -12,7 +12,7 @@ export const getData = () => dispatch => {
     dispatch({type: GET_DATA})
     axios.get('http://localhost:3333/smurfs')
     .then(res => {
-        console.log(`Actions Response: ${res.data}`)
+        console.log(`Actions Response: ${res}`)
         dispatch({type: UPDATE_LIST, payload: res.data})
     })
     .catch(err => {
@@ -21,12 +21,11 @@ export const getData = () => dispatch => {
     })
 }
 
-export const addSmurf = creds => dispatch => {
+export const addSmurf = (value) => dispatch => {
     dispatch({type: ADD_SMURF})
-    return axios.post('http://localhost:3333/smurfs', creds)
+    return axios.post('http://localhost:3333/smurfs', value)
     .then(res => {
-        const addedSmurf = {type: ADD_SMURF, payload: res.data}
-        dispatch(addedSmurf)
+        dispatch({type: ADD_SMURF, payload: res.data})
     })
     .catch(err => {
         console.log(`Actions Error sending data to API: ${err}`)

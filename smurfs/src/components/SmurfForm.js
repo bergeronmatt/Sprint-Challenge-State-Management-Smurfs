@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {getData, addSmurf} from '../actions'
+import axios from 'axios'
 
 const SmurfForm = props => {
     const handleGetData = e => {
@@ -21,8 +22,14 @@ const SmurfForm = props => {
 
     const submitForm = e => {
         e.preventDefault();
-        props.addSmurf(smurf);
-        setSmurf({name:'', age:'', height:''})
+        setSmurf({name: smurf.name, age: smurf.age, height: smurf.height})
+        axios.post('http://localhost:3333/smurfs', smurf)
+        .then(res => {
+            console.log(`post response: ${res}`)
+        })
+        .catch(err => {
+            console.log(`post error: ${err}`)
+        })
     }
 
     return(
@@ -31,29 +38,23 @@ const SmurfForm = props => {
             <form onSubmit={submitForm}>
                 <label htmlFor='smurfName'>Smurf Name</label>
                 <input
-                    id='smurfName'
                     type='text'
-                    name='smurfName'
+                    name='name'
                     onChange={handleChanges}
-                    value={smurf.name}
                 />
 
                 <label htmlFor='smurfAge'>Smurf Age</label>
                 <input
-                    id='smurfAge'
                     type='text'
-                    name='smurfAge'
+                    name='age'
                     onChange={handleChanges}
-                    value={smurf.age}
                 />
 
                 <label htmlFor='smurfHeight'>Smurf Height</label>
                 <input
-                    id='smurfHeigh'
                     type='text'
-                    name='smurfHeight'
+                    name='height'
                     onChange={handleChanges}
-                    value={smurf.height}
                 />
                 <button type="submit">Add Smurf</button>
 
@@ -76,5 +77,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {getData}
+    {getData, addSmurf}
 )(SmurfForm)
